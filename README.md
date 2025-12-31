@@ -1,2 +1,2 @@
 # backend-auth-crud-project
-Description: 
+Description: Scalable REST API with JWT, Role-based access & React UI
