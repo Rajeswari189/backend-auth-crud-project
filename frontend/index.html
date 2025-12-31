@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>API Test UI</title>
+</head>
+<body>
+  <h2>Login</h2>
+  <input id="email" placeholder="Email">
+  <input id="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+
+  <h2>Create Task</h2>
+  <input id="task" placeholder="Task title">
+  <button onclick="createTask()">Create</button>
+
+  <script>
+    let token = "";
+
+    async function login() {
+      const res = await fetch("http://localhost:5000/api/v1/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email.value,
+          password: password.value
+        })
+      });
+      const data = await res.json();
+      token = data.token;
+      alert("Logged in");
+    }
+
+    async function createTask() {
+      await fetch("http://localhost:5000/api/v1/tasks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + token
+        },
+        body: JSON.stringify({ title: task.value })
+      });
+      alert("Task created");
+    }
+  </script>
+</body>
+</html>
